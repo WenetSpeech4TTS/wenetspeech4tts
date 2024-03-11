@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+
+  <title>Accent-VITS</title></title>
+  <meta name="generator" content="Jekyll v3.9.0">
+  <meta property="og:title" content="TODO: title">
+  <meta property="og:locale" content="en_US">
+
+  <meta name="twitter:card" content="summary">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#157878">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-new-gr-c-s-check-loaded="14.1001.0" data-gr-ext-installed="">
+  <section class="page-header">
+
+
+
+  </section>
+
+  <section class="main-content">
+    <h1 id="">
+      <center>Accent-VITS: accent transfer for end-to-end TTS</center>
+    </h1>
+
+    <br>
+    <br>
+    <cite>
+      <center>
+        <a href="https://ma-linhan.github.io/AccentVITS/">
+          https://ma-linhan.github.io/AccentVITS/</a>
+      </center>
+    </cite>
+
+    <br>
+    <br>
+    <h3 id>
+      <center>Linhan Ma<sup>1</sup>, Yongmao Zhang<sup>1</sup>, Xinfa Zhu<sup>1</sup>, Yi Lei<sup>1</sup>, Ziqian Ning<sup>1</sup>, Pengcheng Zhu<sup>2</sup>, and Lei Xie<sup>1*</sup></center>
+      
+      <center><sup>1</sup> Audio, Speech and Language Processing Group (ASLP@NPU), School of Computer Science, Northwestern Polytechnical University, Xi'an, China</center>
+      <center><sup>2</sup> Fuxi AI Lab, NetEase Inc., Hangzhou, China</center>
+    </h3>
+    
+    
+    <br><br>
+    <h2 id="abstract">1. Abstract<a name="abstract"></a></h2>
+    <p> Accent transfer aims to transfer an accent from a source speaker to synthetic speech in the target speaker's voice. The main challenge is how to effectively disentangle speaker timbre and accent 
+      which are entangled in speech. This paper presents a VITS-based [1] end-to-end accent transfer model named Accent-VITS. Based on the main structure of VITS, Accent-VITS makes substantial improvements to 
+      enable effective and stable accent transfer. We leverage a hierarchical CVAE structure [2] to model accent pronunciation information and acoustic features, respectively, using bottleneck features and 
+      mel spectrums as constraints. Moreover, the text-to-wave mapping in VITS is decomposed into text-to-accent and accent-to-wave mappings in Accent-VITS. In this way, the disentanglement of accent and 
+      speaker timbre becomes be more stable and effective. Experiments on multi-accent and Mandarin datasets show that Accent-VITS achieves higher speaker similarity, accent similarity and speech naturalness 
+      as compared with a strong baseline Text2BN2Mel+Vocoder [3][4].
+    </p>
+    <br>
+    <center><img src='fig/asru1.png'></center>
+    <div align="center"><b>Fig.1</b> The architecture of Accent-VITS.</div>
+
+    <br><br>
+
+
+
+
+
+
+
+
+    <h2>2. Dataset<a name="Dataset"></a></h2>
+
+    <h3>Standard Mandarin Dataset -- DB1 </h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center;font-weight: 400">Text</th>
+          <th style="text-align: center;font-weight: 400">他微微腆着肚子，双手叉腰，目视前方。</th>
+          <th style="text-align: center;font-weight: 400">他对这诗越看越喜欢。</th>
+          <th style="text-align: center;font-weight: 400">央企的身板儿一下子就硬了不少。</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Audio</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"><audio src="demos/dataset/db1/db1_002220.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/dataset/db1/db1_002227.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/dataset/db1/db1_002229.wav" controls="" preload=""></audio>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+
+    <h3>Accent Mandarin Dataset with Multiple Accent Speakers</h3>
+    <p>Dongbei (Northeast China):</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center;font-weight: 400">Text</th>
+          <th style="text-align: center;font-weight: 400">跟我俩赛脸呢啊？等会儿回去看我咋收拾你。</th>
+          <th style="text-align: center;font-weight: 400">我压根不同意你去。</th>
+          <th style="text-align: center;font-weight: 400">他考试不及格，被刷掉了。</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Audio</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"><audio src="demos/dataset/dongbei/dongbei_man_100013.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/dataset/dongbei/dongbei_man_100015.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/dataset/dongbei/dongbei_woman_001285.wav" controls="" preload=""></audio>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    
+    <p>Henan:</p>
+
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center;font-weight: 400">Text</th>
+          <th style="text-align: center;font-weight: 400">我锤了他几下。</th>
+          <th style="text-align: center;font-weight: 400">那小子一会儿可串没影儿啦。</th>
+          <th style="text-align: center;font-weight: 400">那次中过一回点，现在看见电器都怵。</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Audio</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"><audio src="demos/dataset/henan/henan_woman_000092.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/dataset/henan/henan_woman_000095.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/dataset/henan/henan_woman_000096.wav" controls="" preload=""></audio>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <p>Shanghai:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center;font-weight: 400">Text</th>
+          <th style="text-align: center;font-weight: 400">记得装点吃呃辣辣身高头啊。</th>
+          <th style="text-align: center;font-weight: 400">吾可以改，但是需要一段辰光来适应。</th>
+          <th style="text-align: center;font-weight: 400">跟老于帮伊呃男朋友辣来搿的坐来海嘎塞无。</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Audio</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"><audio src="demos/dataset/shanghai/shanghai_man_000819.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/dataset/shanghai/shanghai_woman_000111.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/dataset/shanghai/shanghai_woman_000117.wav" controls="" preload=""></audio>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    
+    <p>Sichuan:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: center;font-weight: 400">Text</th>
+          <th style="text-align: center;font-weight: 400">对于这件事，你又没得话说。</th>
+          <th style="text-align: center;font-weight: 400">今天的肉卖的好相因哦。</th>
+          <th style="text-align: center;font-weight: 400">对你笑嚯嚯，因为我讲礼貌。</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Audio</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"><audio src="demos/dataset/sichuan/sichuan_man_20210907021.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/dataset/sichuan/sichuan_man_20210907023.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/dataset/sichuan/sichuan_woman_20210915118.wav" controls="" preload=""></audio>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <br><br>
+
+    <h2>3. Demos--Accent Transfer<a name="result"></a>
+    </h2>
+    <p><b>Accent: Dongbei (Northeast China) </b></p>
+
+    <table>
+      <thead>
+        <tr>
+          <!-- <th style="text-align: center"><strong>Text</strong></th> -->
+          <th style="text-align: center"><strong>Ground truth</strong></th>
+          <th style="text-align: center"><strong>Target speaker</strong></th>
+          <th style="text-align: center"><strong>Text2BN2Mel+Vocoder</strong></th>
+          <th style="text-align: center"><strong>Accent-VITS</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <!-- <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Happy</td> -->
+          <td style="text-align: left" colspan=6>Text: 我们都是木头人儿，一不许说话，二不许笑，三不许露出大门牙。</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"><audio src="demos/gt/dongbei_man_100463_groundtruth.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/tgtspk/putonghua_db1_002223_16k.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/baseline/dongbei_man_100463_baseline.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/accentvits/dongbei_man_100463_proposed.wav" controls="" preload=""></audio>
+          </td>
+        </tr>
+        <tr>
+          <!-- <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Sad</td> -->
+          <td style="text-align: left" colspan=6>Text: 他家来妾了，我们去帮帮忙。</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"><audio src="demos/gt/dongbei_man_100968_groundtruth.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/tgtspk/putonghua_db1_002223_16k.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/baseline/dongbei_man_100968_baseline.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/accentvits/dongbei_man_100968_proposed.wav" controls="" preload=""></audio>  
+          </td>
+        </tr>
+        <tr>
+            <!-- <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Happy</td> -->
+            <td style="text-align: left" colspan=6>Text: 他可贼能胡咧咧，小嘴儿叭儿叭儿的，东北小伙儿不愿听就会鸟悄儿地走开。</td>
+        </tr>
+        <tr>
+            <td style="text-align: left"><audio src="demos/gt/scmn_db_100124_gt.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/tgtspk/sichuan_man_20210907023.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/baseline/scmn_db_100124_b3.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/accentvits/scmn_db_100124_proposed.wav" controls="" preload=""></audio>
+            </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+
+    <p><b>Accent: Henan </b></p>
+
+    <table>
+      <thead>
+        <tr>
+          <!-- <th style="text-align: center"><strong>Text</strong></th> -->
+          <th style="text-align: center"><strong>Ground truth</strong></th>
+          <th style="text-align: center"><strong>Target speaker</strong></th>
+          <th style="text-align: center"><strong>Text2BN2Mel+Vocoder</strong></th>
+          <th style="text-align: center"><strong>Accent-VITS</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <!-- <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Happy</td> -->
+          <td style="text-align: left" colspan=6>Text: 俺说这个屋里俺的兄弟姐妹们啊。</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"><audio src="demos/gt/henan_woman_000496_groundtruth.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/tgtspk/putonghua_db1_002223_16k.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/baseline/henan_woman_000496_baseline.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/accentvits/henan_woman_000496_proposed.wav" controls="" preload=""></audio>
+          </td>
+        </tr>
+        <tr>
+          <!-- <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Sad</td> -->
+          <td style="text-align: left" colspan=6>Text: 不必读堵着耳朵去搞实验了。</td>
+        </tr>
+        <tr>
+          <td style="text-align: left"><audio src="demos/gt/dbmn_hn_001419_gt.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/tgtspk/dongbei_man_100015.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/baseline/dbmn_hn_001419_baseline.wav" controls="" preload=""></audio>
+          </td>
+          <td style="text-align: left"><audio src="demos/accentvits/dbmn_hn_001419_proposed.wav" controls="" preload=""></audio>  
+          </td>
+        </tr>
+        <tr>
+            <!-- <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Sad</td> -->
+            <td style="text-align: left" colspan=6>Text: 我好奇地拿起一个大蒜，左瞅瞅，右瞅瞅。</td>
+        </tr>
+        <tr>
+            <td style="text-align: left"><audio src="demos/gt/scmn_hn_000021_gt.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/tgtspk/sichuan_man_20210907023.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/baseline/scmn_hn_000021.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/accentvits/scmn_hn_000021_proposed.wav" controls="" preload=""></audio>  
+            </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <p><b>Accent: Shanghai </b></p>
+
+    <table>
+      <thead>
+        <tr>
+          <!-- <th style="text-align: center"><strong>Text</strong></th> -->
+          <th style="text-align: center"><strong>Ground truth</strong></th>
+          <th style="text-align: center"><strong>Target speaker</strong></th>
+          <th style="text-align: center"><strong>Text2BN2Mel+Vocoder</strong></th>
+          <th style="text-align: center"><strong>Accent-VITS</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <!-- <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Sad</td> -->
+            <td style="text-align: left" colspan=6>Text: 下趟侬忙呃辰光吾尽量伐干扰。</td>
+        </tr>
+        <tr>
+            <td style="text-align: left"><audio src="demos/gt/shanghai_man_000074_groundtruth.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/tgtspk/putonghua_db1_002223_16k.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/baseline/shanghai_man_000074_baseline.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/accentvits/shanghai_man_000074.wav" controls="" preload=""></audio>  
+            </td>
+        </tr>
+        <tr>
+            <!-- <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Sad</td> -->
+            <td style="text-align: left" colspan=6>Text: 有只狗早哴向七点钟起来。</td>
+        </tr>
+        <tr>
+            <td style="text-align: left"><audio src="demos/gt/dbwo_sh_000087_gt.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/tgtspk/dongbei_woman_001285.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/baseline/dbwo_sh_000087_b4.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/accentvits/dbwo_sh_000087_proposed.wav" controls="" preload=""></audio>  
+            </td>
+        </tr>
+        <tr>
+            <!-- <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Sad</td> -->
+            <td style="text-align: left" colspan=6>Text: 侬辣做撒啊？老公。</td>
+        </tr>
+        <tr>
+            <td style="text-align: left"><audio src="demos/gt/hnwo_sh_000098_gt.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/tgtspk/henan_woman_000095.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/baseline/hnwo_sh_000098_b2.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/accentvits/hnwo_sh_000098_proposed.wav" controls="" preload=""></audio>  
+            </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <p><b>Accent: Sichuan </b></p>
+
+    <table>
+      <thead>
+        <tr>
+          <!-- <th style="text-align: center"><strong>Text</strong></th> -->
+          <th style="text-align: center"><strong>Ground truth</strong></th>
+          <th style="text-align: center"><strong>Target speaker</strong></th>
+          <th style="text-align: center"><strong>Text2BN2Mel+Vocoder</strong></th>
+          <th style="text-align: center"><strong>Accent-VITS</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <!-- <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Sad</td> -->
+            <td style="text-align: left" colspan=6>Text: 我们这虽然伙食不错，但是数量是有限嘞。</td>
+        </tr>
+        <tr>
+            <td style="text-align: left"><audio src="demos/gt/sichuan_woman_20211012330_groundtruth.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/tgtspk/putonghua_db1_002223_16k.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/baseline/sichuan_woman_20211012330_baseline.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/accentvits/sichuan_woman_20211012330_proposed.wav" controls="" preload=""></audio>  
+            </td>
+        </tr>
+        <tr>
+            <!-- <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Sad</td> -->
+            <td style="text-align: left" colspan=6>Text: 真相其实很简单，简单到想不到或不敢想。</td>
+        </tr>
+        <tr>
+            <td style="text-align: left"><audio src="demos/gt/sichuan_woman_20211012354_groundtruth.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/tgtspk/putonghua_db1_002223_16k.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/baseline/sichuan_woman_20211012354_baseline.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/accentvits/sichuan_woman_20211012354_proposed.wav" controls="" preload=""></audio>  
+            </td>
+        </tr>
+        <tr>
+            <!-- <td style="text-align: center; word-break: keep-all; white-space: nowrap;" rowspan=2>Sad</td> -->
+            <td style="text-align: left" colspan=6>Text: 肯定是你小子报嘞警。</td>
+        </tr>
+        <tr>
+            <td style="text-align: left"><audio src="demos/gt/shmn_sc_20211012385_gt.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/tgtspk/shanghai_man_000819.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/baseline/shmn_sc_20211012385_b4.wav" controls="" preload=""></audio>
+            </td>
+            <td style="text-align: left"><audio src="demos/accentvits/shmn_sc_20211012385_proposed.wav" controls="" preload=""></audio>  
+            </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <br>
+
+    <cite>
+      <a href="http://proceedings.mlr.press/v139/kim21f.html">
+      [1] Jaehyeon Kim, Jungil Kong, and Juhee Son, “Conditional variational autoencoder with adversarial learning for end-to-end text-to-speech,” in Proc. ICML. 2021, vol. 139, pp. 5530–5540, PMLR</a>
+    </cite>
+    <br>
+    <cite>
+      <a href="https://proceedings.neurips.cc/paper_files/paper/2022/hash/69c754f571806bf15add18556ff39b4f-Abstract-Conference.html">
+      [2] Sang-Hoon Lee, Seung-Bin Kim, Ji-Hyun Lee, Eunwoo Song, Min-Jae Hwang, and Seong-Whan Lee,
+        “Hierspeech: Bridging the gap between text and speech by hierarchical variational inference using self-supervised representations for speech synthesis,” 
+        Advances in Neural Information Processing Systems, vol. 35, pp. 16624–16636, 2022</a>
+    </cite>
+    <br>
+    <cite>
+      <a href="https://doi.org/10.1109/ISCSLP57327.2022.10037914">
+      [3] Yongmao Zhang, Zhichao Wang, Peiji Yang, Hongshen Sun, Zhisheng Wang, and Lei Xie,
+        “Accentspeech: Learning accent from crowd-sourced data for target speaker TTS with accents,” in Proc. ISCSLP. 2022, pp. 76–80, IEEE.</a>
+    </cite>
+    <br>
+    <cite>
+      <a href="https://doi.org/10.1109/ICASSP43922.2022.9747319">
+      [4] Dongyang Dai, Yuanzhe Chen, Li Chen, Ming Tu, Lu Liu, Rui Xia, Qiao Tian, Yuping Wang, and Yuxuan Wang,
+        “Cloning one’s voice using very limited data in the wild,” in Proc. ICASSP. 2022, pp. 8322–8326, IEEE</a>
+    </cite>
+    <br>
+
+
+
+    <footer class="site-footer">
+
+      <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com/">GitHub
+          Pages</a>.</span>
+    </footer>
+  </section>
+</body>
+
+</html>
