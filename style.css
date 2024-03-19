@@ -731,14 +731,14 @@ a:hover {
     margin-bottom: 0
 }
 
-.main-content table {
+/* .main-content table {
     display: block;
     width: 100%;
     overflow: auto;
     word-break: normal;
     word-break: keep-all;
     -webkit-overflow-scrolling: touch
-}
+} */
 
 .main-content table th {
     font-weight: bold
@@ -805,3 +805,20 @@ a:hover {
 .site-footer-credits {
     color: #819198
 }
+/* 确保表格列宽按照<colgroup>和<col>定义的宽度 */
+table {
+    table-layout: fixed;
+    width: 100%;
+    /* 根据需要调整 */
+}
+audio {
+    width: 70px;
+    height: 45px;
+}
+/* 可能需要的额外样式，以确保音频控件和文本在较小的列中也能良好显示 */
+/* td,
+th {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+} */
