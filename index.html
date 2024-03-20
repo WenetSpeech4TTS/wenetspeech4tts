@@ -65,7 +65,50 @@
     available to advance research in this field.</p>
     
 
-
+<table class="centered-table">
+  <caption>Table 1: WenetSpeech4TTS subsets.</caption>
+  <thead>
+    <tr>
+      <th>Training Subsets</th>
+      <th>DNMOS Threshold</th>
+      <th>Hours</th>
+      <th>Average Segment Duration (s)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="premium">Premium</span></td>
+      <td>4.0</td>
+      <td>945</td>
+      <td>8.3</td>
+    </tr>
+    <tr>
+      <td><span class="standard">Standard</span></td>
+      <td>3.8</td>
+      <td>4,056</td>
+      <td>7.5</td>
+    </tr>
+    <tr>
+      <td><span class="basic">Basic</span></td>
+      <td>3.6</td>
+      <td>7,226</td>
+      <td>6.6</td>
+    </tr>
+    <tr>
+      <td><span class="rest">Rest</span></td>
+      <td>
+        < 3.6</td>
+      <td>5,574</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>WenetSpeech<sup>1</sup> (orig)</td>
+      <td>-</td>
+      <td>12,483</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
 
     <h2>2. Zero-Shot TTS Samples <a name="Comparison"></a></h2>
 
@@ -79,54 +122,18 @@
       <li><b>NS2 P : </b> NaturalSpeech 2 fine-tuning with the WenetSpeech4TTS <i><b>Premium</b></i> subset</li>
 
     </ul> -->
-    <style>
-      .model-list {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-      }
 
-      .model-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-      }
-
-      .model-name {
-        font-weight: bold;
-        margin-right: 5px;
-        flex: 0 0 auto;
-        /* Prevents flex items from growing or shrinking */
-      }
-
-      .model-description {
-        flex-grow: 1;
-        /* Allows the description to fill the remaining space */
-      }
-
-      .basic {
-        color: #007BFF;
-      }
-
-      .standard {
-        color: #28A745;
-      }
-
-      .premium {
-        color: #FFC107;
-      }
-    </style>
 
     <p>Models</p>
     <ul class="model-list">
-      <li class="model-item"><span class="model-name">VALL-E:</span> <span class="model-description">VALL-E<sup>1</sup>
+      <li class="model-item"><span class="model-name">VALL-E:</span> <span class="model-description">VALL-E<sup>2</sup>
           trained with the WenetSpeech4TTS <span class="basic">Basic</span> subset</span></li>
       <li class="model-item"><span class="model-name">VALL-E S:</span> <span class="model-description">VALL-E fine-tuning
           with the WenetSpeech4TTS <span class="standard">Standard</span> subset</span></li>
       <li class="model-item"><span class="model-name">VALL-E P:</span> <span class="model-description">VALL-E fine-tuning
           with the WenetSpeech4TTS <span class="premium">Premium</span> subset</span></li>
       <li class="model-item"><span class="model-name">NS2:</span> <span class="model-description">NaturalSpeech
-          2<sup>2</sup> trained with the WenetSpeech4TTS <span class="basic">Basic</span> subset</span></li>
+          2<sup>3</sup> trained with the WenetSpeech4TTS <span class="basic">Basic</span> subset</span></li>
       <li class="model-item"><span class="model-name">NS2 S:</span> <span class="model-description">NaturalSpeech 2
           fine-tuning with the WenetSpeech4TTS <span class="standard">Standard</span> subset</span></li>
       <li class="model-item"><span class="model-name">NS2 P:</span> <span class="model-description">NaturalSpeech 2
@@ -151,13 +158,20 @@
 
     <h3>References:</h3>
     <div>
+      <div><cite><a href="https://arxiv.org/pdf/2110.03370.pdf">
+        [1] B. Zhang, H. Lv, P. Guo, Q. Shao, C. Yang, L. Xie, X. Xu, H. Bu,
+        X. Chen, C. Zeng et al., “Wenetspeech: A 10000+ hours multi-
+        domain mandarin corpus for speech recognition,” in ICASSP
+        2022-2022 IEEE International Conference on Acoustics, Speech
+        and Signal Processing (ICASSP). IEEE, 2022, pp. 6182–6186.
+      </a></cite></div>
       <div><cite><a href="https://arxiv.org/pdf/2301.02111.pdf">
-          [1] C. Wang, S. Chen, Y. Wu, Z. Zhang, L. Zhou, S. Liu, Z. Chen,
+          [2] C. Wang, S. Chen, Y. Wu, Z. Zhang, L. Zhou, S. Liu, Z. Chen,
           Y. Liu, H. Wang, J. Li, L. He, S. Zhao, and F. Wei, “Neural codec
           language models are zero-shot text to speech synthesizers,” CoRR,
           vol. abs/2301.02111, 2023.</a></cite></div>
       <div><cite><a href="https://arxiv.org/pdf/2304.09116.pdf">
-        [2] K. Shen, Z. Ju, X. Tan, E. Liu, Y. Leng, L. He, T. Qin, sheng zhao,
+        [3] K. Shen, Z. Ju, X. Tan, E. Liu, Y. Leng, L. He, T. Qin, sheng zhao,
         and J. Bian, “Naturalspeech 2: Latent diffusion models are natural
         and zero-shot speech and singing synthesizers,” in The Twelfth
         International Conference on Learning Representations, 2024.</a></cite></div>
@@ -299,57 +313,3 @@ window.onload = function() {
  
 </script>
 
-<!--  function long_form(params) {
-  ["text_1", "方庆惊魂稍定，悲痛继之而来，失了四十万两军饷，这事非同小可，起码也是个凌迟的罪名。方庆摸摸头皮，欲哭无泪，心中想道：“不如那强盗把我射死还好！”他呆坐路上，看月亮慢慢升到天中，想来想去，实是难逃一死，叹了口气，摸到一条绊马的粗绳，在颈上打了个结，悬在树桠，企图自尽。身子悬空，绞索渐紧，方庆只觉胸中气促，呼吸窒息，头痛欲裂，难受之极，心中想道：“早知自缢如此辛苦，不如投水还好。”其实北地春寒，投水自杀也是一样的不好受。方庆本是迫于自尽，心中实不想死。绞索更紧，血流急促，更是辛苦，这时想叫又叫不出声，眼前一团黑影渐渐扩大，看看就要气绝身亡。","After the initial shock subsided, Fang Qing was overwhelmed with sorrow. Losing 400,000 taels of military funds was no trivial matter; at the very least, it would be considered a capital offense. Touching his scalp, Fang Qing felt like crying but had no tears left. In his heart, he thought, \"It would have been better if the bandits had shot me dead!\" Sitting dazed by the roadside, he watched as the moon slowly rose to the middle of the sky. After much contemplation, he realized that there was no escaping death. With a sigh, he found a thick rope for tethering horses, tied a knot around his neck, and hung it from a tree branch, attempting suicide. As his body hung in the air and the noose tightened, Fang Qing felt his breath quicken, suffocation setting in, his head pounding with unbearable pain. He thought to himself, \"If I had known hanging myself would be this agonizing, drowning would have been preferable.\" In reality, the cold of early spring in the northern region made drowning equally unbearable. Fang Qing had only sought to end his life out of desperation; deep down, he did not truly want to die. As the noose tightened further and blood rushed, the suffering intensified. Unable to cry out for help, he watched as darkness enveloped him, feeling his life slipping away."] ,
-      ["text_2", "大漠，多么熟悉的大漠，但现在在金镶玉眼睛里，竟透出几许陌生的意味。是不是因为物虽如旧，人事却非？也可能是因为她的心，已不再是离开前那颗幼稚的心，它已多了许多沧桑，许多回忆，许多遗忘。金镶玉匹马前行，行了许久，竟没有回头望一眼。因为她知道，属于她的地方，永远是这冷酷无情的沙漠，她再也经不起风光旖旎的情感世界，她的心里有一个人的影子，在她今后的生命里，她一定会时常记起这个人，也会记起他的话：回到大漠去，在那里，你才是王者，智者。中原，不是属于你的地方。她的马后，一片生机盎然，花红柳绿；眼前，却是一派苍黄，风急沙狂，也许还有一个地方会使她能慢慢抚平创伤，她看到它时，心里会有种回家的感觉。那是龙门客栈，似乎永远存在于沙漠中的龙门客栈。","The desert, how familiar it is, but now in the eyes of Jin Xiangyu, there seems to be a hint of unfamiliar meaning. Is it because although the things remain the same, the circumstances have changed? Or perhaps it's because her heart is no longer the same as before she left, it has experienced many vicissitudes, memories, and forgetfulness. Jin Xiangyu rode on alone for a long time without looking back even once. Because she knew that her place belonged forever to this cold and ruthless desert. She could no longer withstand the charming emotional world. There is a shadow of a person in her heart, and in her future life, she will often remember this person and his words: \"Return to the desert, there you are the king, the wise one. The Central Plains do not belong to you.\" Behind her horse, there is vitality and greenery; before her eyes, there is desolation with fierce winds and raging sands. Perhaps there is still a place that can slowly heal her wounds. When she sees it, she will feel a sense of coming home. That is Longmen Inn, seemingly eternal in the desert."],
-      ["text_3", "突然，马蹄声急如骤雨，在静夜长街竟如惊雷滚过！仔细一听，正向左庶长府而来。卫鞅心头一震，大步匆匆向府门走来。马队正在左庶长府门前收住，车英滚鞍下马，“卫尉车英，参见左庶长！”卫鞅心头一沉，“车英，君上何在？”“禀报左庶长，君上执意孤身赴险，到神农大山找老墨子论理去了。”卫鞅心头轰的一声大跳，面色骤然苍白，摇摇晃晃的便要栽倒。车英一个箭步冲上，扶住卫鞅。此时景监已经赶到，立即和车英扶着卫鞅回到寝室。当太医被急如星火般唤来时，卫鞅已经从卧榻翻身坐起，挥手吩咐所有人退下，唯留景监车英在房中。卫鞅走下卧榻，双腿犹自发软，强自扶着剑架道：“车英，详情如何？仔细说来。”","Suddenly, the sound of hooves was as urgent as a torrential rain, rolling through the quiet streets like thunder! Upon careful listening, it was approaching the residence of Left Prime Minister. Wei Yang's heart trembled, and he hurriedly walked towards the mansion. The horse team was just stopping in front of the mansion gate. Che Ying dismounted from his horse and said, \"Wei Wei Che Ying, paying respects to the Left Prime Minister!\" Wei Yang's heart sank, \"Che Ying, where is the king?\" \"Reporting to the Left Prime Minister, His Majesty insisted on going alone to the dangerous Shen Nong Mountain to discuss philosophy with Lao Mozi.\" Wei Yang's heart thudded loudly, his face suddenly pale, and he staggered as if about to fall. Che Ying swiftly stepped forward and supported Wei Yang. By this time, Jing Jian had arrived and immediately, with Che Ying's help, escorted Wei Yang back to his quarters. When the royal physician was urgently summoned, Wei Yang had already risen from his bed, waved his hand to dismiss everyone, leaving only Jing Jian and Che Ying in the room. Wei Yang stepped down from the bed, his legs still weak, and he leaned on his sword for support, saying, \"Che Ying, what are the details? Tell me everything.\""],
-      ["text_4", "他们究竟是什么势力呢？以卫鞅对天下民间力量的了解，竟是想不清来路。能在栎阳城将三十个墨家剑客在片刻之间干净利索的赶走，绝不是等闲门派。战国学派中，能和墨家在秘密行动上一争高下者，惟有鬼谷子一门。其余学派虽多有深藏不露的特出剑士，但毕竟是修学为主，不可能实施这种霹雳风暴般的袭击行动。即或是名将渊薮的兵家，也因志不在此，而素来不搞秘密行动。那么说，是鬼门发动了这场袭击？有可能。因为鬼谷子一门在政学上是坚定的法家，历来反对墨家用大而无当的“兼爱非攻”干预国家法制。再者，鬼门多奇能异士，高明如百里老人者当有百数十人之多，虽在整体行动上与墨家无法抗衡，但在一次行动中击败墨家还是完全有可能的。","What exactly are they? Based on Wei Yang's understanding of the forces among the common people, it's hard to figure out their origins. Being able to swiftly drive away thirty Mo School swordsmen in a moment in the city of Liyang is definitely not something ordinary. Among the schools of thought in the Warring States period, the only one that can compete with the Mo School in clandestine operations is the Guiguzi School. Although other schools have outstanding swordsmen who keep a low profile, they primarily focus on learning and cultivation and are unlikely to carry out such lightning-like storm attacks. Even the military strategists like Yuanshou, whose expertise lies elsewhere, do not engage in covert operations. So, could it be that the Guimen initiated this attack? It's possible. Because the Guiguzi School is staunchly Legalist in political philosophy, they have always opposed the Mo School's intervention in state laws with their indiscriminate \"universal love and non-aggression\" doctrine. Furthermore, the Guimen possess many extraordinary individuals, with masters as skilled as Baili Laoren numbering in the hundreds. While they may not be able to match the Mo School in overall strength, defeating them in a single operation is entirely plausible."],
-      ["text_5", "大青马的步伐似乎也不那么镇定了。陈阵的双腿和马身都在发抖，并迅速发生可怕的共振，继而传染放大了人马共同的恐惧。大青马的耳朵背向身后，紧张关注着那条探子狼。一旦狼探明实情，人马可能正好走到离狼群的最近处。陈阵觉得自己正在穿越一张巨大的狼口，上面是锋利的狼牙，下面也是锋利的狼牙，没准他正走到上下狼牙之间，狼口便咔嚓一声合拢了。大青马开始轻轻后蹲聚力，准备最后的拼死一搏。可是，负重的马一启动就得吃亏。陈阵忽然像草原牧民那样在危急关头心中呼唤起腾格里：“长生天，腾格里，请你伸出胳膊，帮我一把吧!”他又轻轻呼叫毕利格阿爸。毕利格蒙语的意思是睿智，他希望老阿爸能把蒙古人的草原智慧，快快送抵他的大脑。静静的额仑草原，没有任何回声。他绝望地抬起头，想最后看一眼美丽冰蓝的腾格里。","The pace of the large blue horse seemed less steady now. Chen Zhen's legs and the horse's body were trembling, and a terrible resonance quickly spread, magnifying the shared fear between man and horse. The big blue horse's ears were pinned back, nervously watching the wolf scout. Once the wolf discovered the truth, the man and horse might just be walking into the closest proximity to the wolf pack. Chen Zhen felt like he was passing through a giant wolf's jaws, with sharp teeth above and below. Perhaps he was walking right into the gap between the upper and lower teeth, and the jaws would snap shut with a click. The big blue horse began to crouch slightly, gathering strength, preparing for a final desperate struggle. However, a burdened horse would suffer as soon as it started to move. Suddenly, Chen Zhen called out in his heart like a steppe herder at a critical moment: \"Changshengtian, Tengger, please lend me a hand!\" He softly called out to his grandfather Bilige. Bilige Mongolian meant wisdom, and he hoped his old grandfather could swiftly deliver the grassland wisdom of the Mongolian people to his mind. The silent Eren grassland echoed with no response. He lifted his head in despair, wanting to take one last look at the beautiful ice-blue Tengger."],
-      ["text_6", "这人竟不惜自己的命来救只猫，难道是个疯子。只见那人躺在地上，怀里抱着只猫，正笑嘻嘻的问道：小痹乖，下次过街要小心，这年头睁眼的瞎子多得很，被这种混蛋压死了，岂非冤枉么？整个马车从他身上压过去，从头到脚，竟连一丝损伤都没有，只不过身上穿的破衣服，变得更破了点而已。赶车的大汉又惊又恐，大骂道：“谁是混蛋，你才是混蛋，你找死了，老子还陪你吃人命官司……”路人又惊又笑，赶车大汉在屋顶上又惊又怕，他却抱着猫慢腾腾地往酒铺走，像是什么事也没发生过。阳光，照在他满脸青渗渗的胡子上，也照在他脸上那懒洋洋的笑容，一双又黑又亮的大眼睛。","This person risked his own life to save only a cat. Could it be that he's crazy? I saw the man lying on the ground, holding the cat in his arms, smiling and saying, \"Xiao Bi, be careful when crossing the street next time. There are so many blind people nowadays. Being crushed by such bastards, wouldn't that be unjust?\" The whole carriage passed over him, from head to toe, yet there was not a single injury, just the clothes he wore were even more tattered. The driver of the carriage was both shocked and scared, cursing, \"Who's the bastard? You're the bastard! You're asking for death, I'll accompany you to court for manslaughter…\" Passersby were shocked and amused, the carriage driver was shocked and afraid on the roof, but he walked slowly towards the wine shop holding the cat, as if nothing had happened. The sunlight shone on his stubbly face, as well as on his lazy smile and his big, black, bright eyes."],
-      ["text_7", "那乞丐在钟下取出一大碗肉，一大钵酒来，放在一旁，再将古钟置于原处。查伊璜见他如此神力，不禁赫然，仔细看时，竟然便是去冬一起喝酒的乞丐，笑问：“兄台还认得我吗？”啊，原来是你。今日我来作东，大家再喝个痛快，来来来，喝酒。说着将土钵递了过去。“这酒挺不错呀。”“这是狗肉，吃不吃？”查伊璜虽觉得肮脏，但想：“我即当他是酒友，倘若推辞，未免瞧不起他了。”于是道谢伸手儿接过，咬了一口。两人便在破庙中席地而坐，将土钵递来递去，你喝一口儿，我喝一口儿，吃肉时便伸手到碗中去抓，不多时酒肉俱尽。只可惜酒少了，醉不到孝廉公。","The beggar then took out a large bowl of meat and a large bowl of wine from under the bell, placed them aside, and put the ancient bell back in its original place. Chai Huang was amazed at his supernatural power. Upon closer inspection, he realized that this beggar was the same one he had drunk with last winter. He laughed and asked, \"Do you still recognize me, brother?\" \"Ah, it's you.\" \"Today, I'm hosting. Let's have a good drink again. Come on, drink up.\" Saying this, he handed over the earthen bowl. \"This wine is quite good.\" \"This is dog meat. Do you want some?\" Although Chai Huang felt disgusted, he thought, \"I should treat him as a drinking buddy. If I refuse, it might look down on him.\" So he thanked him and reached out to take a bite. The two of them sat on the ground in the dilapidated temple, passing the earthen bowl back and forth, each taking a sip. When eating the meat, they reached into the bowl to grab it. Before long, both the wine and meat were gone. It's just a pity that there was not enough wine to get Chai Huang drunk."],
-    let scenes = [
-      ["long1", "照说年纪不大，可是满脸皱纹深陷，却胜似七八十岁老翁，身穿蓝布直缀，颈中挂着个婴儿所用的锦缎围延，围延上绣著幅花猫扑蝶图，已然陈旧破烂。“这怪人在这儿坐了老半天啦，怎麽动也不动？”,“别叫怪人，要叫“老伯伯”。你叫他怪人，他要生气的。”,“他还不怪吗？这麽老了，头颈里却挂了个围延。他生了气，要是胡子都翘了起来，那才好看呢。”从小舟中拿起一个莲蓬，往那人头上掷去。小舟与那怪客相距数丈，陆无双年纪虽小，手上劲力竟然不弱，这一掷也是甚准。“表妹！”待要阻止，已然不及，只见那莲蓬迳往怪客脸上飞去。那怪客头一仰，已咬住莲蓬，也不伸手去拿，舌头卷处，咬住莲蓬便大嚼起来。五个少女见他竟剥不出莲子，也不怕苦涩，就这麽连瓣连衣的吞吃。",`According to his age, he shouldn't be old, but his face is full of deep wrinkles, making him look like a seventy or eighty-year-old man. He is dressed in blue cloth, and around his neck, he hangs a silk baby bib embroidered with a picture of flowers, cats, and butterflies, which is already worn and tattered. "This strange man has been sitting here for quite a while. Why doesn't he move?" "Don't call him a strange man. Call him 'elderly uncle.' If you call him a strange man, he'll get angry." "Isn't he strange though? He's so old, yet he's wearing a baby bib around his neck. If he gets angry and his beard sticks up, that would be a sight to see." Taking a lotus seedpod from the small boat, she hurled it toward the man's head. The distance between the small boat and the strange guest was several zhangs (a Chinese measurement unit), and although Lu Wushuang was young, her strength was surprisingly strong, and the throw was quite accurate. "Cousin!" Although they wanted to stop her, it was too late. They saw the lotus seedpod fly straight toward the strange man's face. The strange man tilted his head back and caught the lotus seedpod in his mouth. Instead of reaching for it, he rolled his tongue around it and started chewing on it. The five girls saw that he couldn't peel out the lotus seeds and didn't mind the bitterness, so they started eating the lotus seedpods, petals and all.`],
-      ["long2", "洛秩终于长舒了一口气，把目光移向右侧的玻璃，表情放松而冷漠。北京秋天的晚上很有些萧索，烤肉店内外的温差让窗子上结起了密密的水珠。洛秩试探性地拿起了一杯酒，一口灌下。大家都是不被爱的人，自己没那么彪悍勇敢，只能喝酒略表敬意。世界上总有那么一种人，对于庸庸碌碌的普通人来说，他们的存在简直是一种讽刺。比如盛淮南。“对了，你跟他前女友是同班同学吧？”洛秩吓了一跳，本以为对面的人已经睡死了。",`Luozhi finally heaved a sigh of relief, shifting his gaze to the glass on the right with a relaxed yet indifferent expression. Beijing's autumn nights were somewhat desolate, and the temperature difference between inside and outside the barbecue restaurant caused dense beads of water to form on the windows. Luozhi tentatively picked up a glass of wine and gulped it down. Everyone present was unloved, not as fearless and brave as they seemed, but could only drink to show a little respect. In the world, there always exists a kind of person who is an irony to ordinary and mediocre people. For example, Sheng Huainan. "By the way, you and his ex-girlfriend were classmates, right?" Luozhi was startled, thinking the person opposite him had already fallen into a deep sleep.`],
-    ]
-    let models = ["FS2BERT", "HCE",  "TACE", "HiGNN-TTS"]
-    let long_data = `
-        <tr>
-          <td style="text-align: center; width: 20%;" rowspan=1><strong>Text<strong></td>
-          <td style="text-align: center; width: 22%;" rowspan=1><strong>English translation<strong></td>
-        `
-    for (const id in models) {
-      model = models[id]
-      cite = ""
-      if (id != 3) {
-        num = Number(id) + 1
-        cite += "[" + num + "]"
-      }
-      long_data += '<td style="text-align: center; width: 14%;" rowspan=1><strong>' + model + cite + '<strong></td>'
-    }
-    long_data += `</tr>`
-    
-    for (let x in scenes) {
-      let scene = scenes[x]
-      let file = scene[0]
-      let text = scene[1]
-      let trans = scene[2]
-      let scene_data = ""
-
-      scene_data += '<tr>'
-      scene_data += '<td style="text-align: center; width: 20%;" rowspan=1>' + text + '</td>'
-      scene_data += '<td style="text-align: center; width: 22%;" rowspan=1>' + trans + '</td>'
-      for (let z in models) {
-        let model = models[z]
-        scene_data += '<td style="text-align: center"><audio style="width: 100%;" controls="" src="' + './raw/samples/' + model + '/' + file + '.wav' + '"></audio></td>'
-        
-      }
-      scene_data += '</tr>'
-      long_data += scene_data
-    }
-    return long_data
-  }
-
-  window.onload = function () {
-    document.getElementById('tbody_short').innerHTML = short_form()
-    document.getElementById('tbody_long').innerHTML = long_form()
-  } -->
